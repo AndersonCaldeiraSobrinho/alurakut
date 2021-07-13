@@ -80,7 +80,7 @@ AlurakutMenu.Wrapper = styled.header`
     }
     .boxLink {
       font-size: 18px;
-      color: #2E7BB4;
+      color: #000;
       -webkit-text-decoration: none;
       text-decoration: none;
       font-weight: 800;
@@ -117,6 +117,7 @@ AlurakutMenu.Wrapper = styled.header`
       display: none;
       @media(min-width: 860px) {
         display: flex;
+        align-items: center;
       }
       a {
         font-size: 12px;

@@ -7,7 +7,7 @@ const Box = styled.div`
   /* CSS Pré-Pronto */
   margin-bottom: 10px;
   .boxLink {
-    font-size: 14px;
+    font-size: 9px;
     color: #2E7BB4;
     text-decoration: none;
     font-weight: 800;
@@ -36,7 +36,7 @@ const Box = styled.div`
     border-bottom-color: #ECF2FA;
   }
   input {
-    width: 100%;
+    width: 90%;
     background-color: #F4F4F4;
     color: #333333;
     border: 0;
