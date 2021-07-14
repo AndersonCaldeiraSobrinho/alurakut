@@ -50,7 +50,11 @@ table {
 
 
   body {
-    background-color: #CCCCCC;
+    background-image: url('https://www.anso.com.br/wp-content/uploads/2020/09/image-from-rawpixel-id-418655-jpeg-scaled.jpg');
+    background-color: #ccc;
+    background-repeat: no-repeat repeat;
+    background-size: 100vw auto;
+    background-position: center;
     font-family: sans-serif;
   }
   
