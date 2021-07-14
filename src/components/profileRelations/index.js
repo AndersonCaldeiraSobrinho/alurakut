@@ -1,5 +1,28 @@
+import React from 'react';
 import styled from 'styled-components';
 import Box from '../Box';
+
+
+
+export function ProfileRelationsBoxContent({ githubUser }) {
+  return (
+    
+      <ul>
+      {githubUser.slice(0, 6).map((itemAtual) => {
+        return (
+          <li key={itemAtual.id}>
+            <a href={itemAtual.link}>
+            <img src={itemAtual.image} />
+            <span>{itemAtual.title}</span>
+            </a>
+          </li>
+        )
+      })}
+
+      </ul>
+
+  )
+}
 
 export const ProfileRelationsBoxWrapper = styled(Box)`
   ul {
