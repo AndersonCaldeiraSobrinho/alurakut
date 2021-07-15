@@ -4,16 +4,16 @@ import Box from '../Box';
 
 
 
-export function ProfileRelationsBoxContent({ githubUser }) {
+export function ProfileRelationsBoxContent({ props }) {
   return (
     
       <ul>
-      {githubUser.slice(0, 6).map((itemAtual) => {
+      {props.slice(0, 6).map((itemAtual) => {
         return (
-          <li key={itemAtual.id}>
-            <a href={itemAtual.link}>
-            <img src={itemAtual.image} />
-            <span>{itemAtual.title}</span>
+          <li key={itemAtual.node_id}>
+            <a href={itemAtual.url}>
+            <img src={itemAtual.avatar_url} />
+            <span>{itemAtual.login}</span>
             </a>
           </li>
         )

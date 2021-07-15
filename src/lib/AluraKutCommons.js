@@ -58,6 +58,7 @@ AlurakutMenu.Wrapper = styled.header`
   .alurakutMenuProfileSidebar {
     background: white;
     position: fixed;
+    overflow-y: scroll;
     z-index: 100;
     padding: 46px;
     bottom: 0;
@@ -118,6 +119,7 @@ AlurakutMenu.Wrapper = styled.header`
       @media(min-width: 860px) {
         display: flex;
         align-items: center;
+        margin-left: 8px;
       }
       a {
         font-size: 12px;

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { TestimonialBox } from '../src/components/Testimonial';
 import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/Box';
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AluraKutCommons';
@@ -24,61 +23,68 @@ function ProfileSideBar(propriedades) {
 
 export default function Home() {
   
-  const [testemunhos, setTestemunhos] = React.useState([{
-    id:'',
-    title: ''
-  }]);
+  const [seguidores, setSeguidores] = React.useState([]);
   const img = 'https://picsum.photos/200/300';
   const githubUser = 'AndersonCaldeiraSobrinho';
   const [comunidades, setComunidades] = React.useState([{
     id: '165169846463537',
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+    login: 'Eu odeio acordar cedo',
+    avatar_url: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
   }]);
   const pessoasFavoritas = [{
-      id: 1,
-      title: 'Punxoxo',
-      image: 'https://github.com/Punxoxo.png',
-      link: 'https://github.com/Punxoxo'
+      node_id: 'MDQ6VXNlcjM4NzQ3MA==',
+      login: 'alinebastos',
+      avatar_url: 'https://avatars.githubusercontent.com/u/387470?v=4',
+      url: 'https://github.com/alinebastos'
     },
     {
-      id: 2,
-      title: 'victoratavila',
-      image: 'https://github.com/victoratavila.png',
-      link: 'https://github.com/victoratavila'
+      node_id: 	"MDQ6VXNlcjE5MTQ2NjA=",
+      login: 'reinaldoferraz',
+      avatar_url: 'https://avatars.githubusercontent.com/u/1914660?v=4',
+      url: 'https://github.com/reinaldoferraz'
     },
     {
-      id: 3,
-      title: 'sarajuvenal',
-      image: 'https://github.com/sarajuvenal.png',
-      link: 'https://github.com/sarajuvenal'
+      node_id: "MDQ6VXNlcjE4Mzg0ODc=",
+      login: 'talitapagani',
+      avatar_url: 'https://avatars.githubusercontent.com/u/1838487?v=4',
+      url: 'https://github.com/talitapagani'
     },
     {
-      id: 4,
-      title: 'marcelodv',
-      image: 'https://github.com/marcelodv.png',
-      link: 'https://github.com/marcelodv'
+      node_id: "MDQ6VXNlcjg2ODMzNzg=",
+      login: 'gustavoguanabara',
+      avatar_url: 'https://avatars.githubusercontent.com/u/8683378?v=4',
+      url: 'https://github.com/gustavoguanabara'
     },
     {
-      id: 5,
-      title: 'davyd-souza',
-      image: 'https://github.com/davyd-souza.png',
-      link: 'https://github.com/davyd-souza'
+      node_id: "MDQ6VXNlcjM2MDM3OTM=",
+      login: 'felipefialho',
+      avatar_url: 'https://avatars.githubusercontent.com/u/3603793?v=4',
+      url: 'https://github.com/felipefialho'
     },
     {
-      id: 6,
-      title: 'relue271',
-      image: 'https://github.com/relue271.png',
-      link: 'https://github.com/relue271'
+      node_id: 	"MDQ6VXNlcjUzMjA3NjM4",
+      login: 'PriyaNobre',
+      avatar_url: 'https://avatars.githubusercontent.com/u/53207638?v=4',
+      url: 'https://github.com/PriyaNobre',
     },
     {
-      id: 7,
-      title: 'Gustavo300493',
-      image: 'https://github.com/Gustavo300493.png',
-      link: 'https://github.com/Gustavo300493'
+      node_id: 	"MDQ6VXNlcjE4NTgzNzE2",
+      login: 'carinebatista',
+      avatar_url: 'https://avatars.githubusercontent.com/u/18583716?v=4',
+      url: 'https://github.com/carinebatista'
     }
   ];
- 
+
+  React.useEffect(function(){
+    fetch('https://api.github.com/users/AndersonCaldeiraSobrinho/followers')
+    .then(function (respostaDoServidor) {
+      return respostaDoServidor.json();
+    })
+    .then(function(respostaCompleta){
+      setSeguidores(respostaCompleta);
+    })
+  }, [])
+
   return (
     <>
       <AlurakutMenu githubUser={githubUser} />
@@ -133,47 +139,24 @@ export default function Home() {
 
             </form>
           </Box>
-          <Box>
-            <h2>Deixe um depoimento</h2>
-            <hr />
-            <form onSubmit={ function handleCriaDepoimento(e) {
-              e.preventDefault();
-              //console.log(e);
-              const dadosDoForm = new FormData(e.target);
-              //console.log(dadosDoForm);
-              const testemunho = {
-                title: dadosDoForm.get('title')
-              }
-              console.log(testemunho);
-              // const testemunhosAtualizados = [...testemunhos, testemunho];
-              // setTestemunhos(testemunhosAtualizadas);
-              
-            }}>
-              <div>
-                <input 
-                  placeholder="Qual mensagem quer deixar?" 
-                  name="title" 
-                  aria-label="Qual mensagem quer deixar?"
-                />
-              </div>
-
-              <button>
-                Adicionar
-              </button>
-
-            </form>
-            {/* <TestimonialBox testemunho={testemunho}/> */}
-          </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
-          <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle" >Pessoas da Comunidade ({ pessoasFavoritas.length })</h2>
-            <ProfileRelationsBoxContent githubUser={pessoasFavoritas} />
-          </ProfileRelationsBoxWrapper>
+          <Box>
+            <ProfileRelationsBoxWrapper>
+              <h2 className="smallTitle" >Pessoas da Comunidade ({ pessoasFavoritas.length })</h2>
+              <ProfileRelationsBoxContent props={pessoasFavoritas} />
+            </ProfileRelationsBoxWrapper>
+          </Box>
           <Box>
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle" >Comunidades ({ comunidades.length })</h2>
-            <ProfileRelationsBoxContent githubUser={comunidades} />
+            <ProfileRelationsBoxContent props={comunidades} />
+          </ProfileRelationsBoxWrapper>
+          </Box>
+          <Box>
+          <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle" >Amigos ({ seguidores.length })</h2>
+            <ProfileRelationsBoxContent props={seguidores} />
           </ProfileRelationsBoxWrapper>
           </Box>
         </div>
