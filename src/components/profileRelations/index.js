@@ -10,9 +10,9 @@ export function ProfileRelationsBoxContent({ props }) {
       <ul>
       {props.slice(0, 6).map((itemAtual) => {
         return (
-          <li key={itemAtual.node_id}>
+          <li key={itemAtual.nodeId}>
             <a href={itemAtual.url}>
-            <img src={itemAtual.avatar_url} />
+            <img src={itemAtual.avatarUrl} />
             <span>{itemAtual.login}</span>
             </a>
           </li>

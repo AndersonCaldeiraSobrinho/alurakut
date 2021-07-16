@@ -27,53 +27,9 @@ export default function Home() {
   const img = 'https://picsum.photos/200/300';
   const githubUser = 'AndersonCaldeiraSobrinho';
   const [comunidades, setComunidades] = React.useState([{
-    id: '165169846463537',
-    login: 'Eu odeio acordar cedo',
-    avatar_url: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+   
   }]);
-  const pessoasFavoritas = [{
-      node_id: 'MDQ6VXNlcjM4NzQ3MA==',
-      login: 'alinebastos',
-      avatar_url: 'https://avatars.githubusercontent.com/u/387470?v=4',
-      url: 'https://github.com/alinebastos'
-    },
-    {
-      node_id: 	"MDQ6VXNlcjE5MTQ2NjA=",
-      login: 'reinaldoferraz',
-      avatar_url: 'https://avatars.githubusercontent.com/u/1914660?v=4',
-      url: 'https://github.com/reinaldoferraz'
-    },
-    {
-      node_id: "MDQ6VXNlcjE4Mzg0ODc=",
-      login: 'talitapagani',
-      avatar_url: 'https://avatars.githubusercontent.com/u/1838487?v=4',
-      url: 'https://github.com/talitapagani'
-    },
-    {
-      node_id: "MDQ6VXNlcjg2ODMzNzg=",
-      login: 'gustavoguanabara',
-      avatar_url: 'https://avatars.githubusercontent.com/u/8683378?v=4',
-      url: 'https://github.com/gustavoguanabara'
-    },
-    {
-      node_id: "MDQ6VXNlcjM2MDM3OTM=",
-      login: 'felipefialho',
-      avatar_url: 'https://avatars.githubusercontent.com/u/3603793?v=4',
-      url: 'https://github.com/felipefialho'
-    },
-    {
-      node_id: 	"MDQ6VXNlcjUzMjA3NjM4",
-      login: 'PriyaNobre',
-      avatar_url: 'https://avatars.githubusercontent.com/u/53207638?v=4',
-      url: 'https://github.com/PriyaNobre',
-    },
-    {
-      node_id: 	"MDQ6VXNlcjE4NTgzNzE2",
-      login: 'carinebatista',
-      avatar_url: 'https://avatars.githubusercontent.com/u/18583716?v=4',
-      url: 'https://github.com/carinebatista'
-    }
-  ];
+  const [pessoasFavoritas, SetPessoasFavoritas] = React.useState([]);
 
   React.useEffect(function(){
     fetch('https://api.github.com/users/AndersonCaldeiraSobrinho/followers')
@@ -83,6 +39,51 @@ export default function Home() {
     .then(function(respostaCompleta){
       setSeguidores(respostaCompleta);
     })
+
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '4d69a29483d6bd56b11461f6045992',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({"query": `query {
+        allCommunities {
+          nodeId
+          avatarUrl
+          login
+          url
+        }
+      }`})
+    })
+    .then((response) => response.json())
+    .then((respostaCompleta) =>{
+      const ComunidadesDato = respostaCompleta.data.allCommunities;
+      setComunidades(ComunidadesDato)
+    })
+
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': '4d69a29483d6bd56b11461f6045992',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({"query": `query {
+        allIdols{
+         login
+         nodeId
+         url
+         avatarUrl
+       }
+     }`})
+    })
+    .then((response) => response.json())
+    .then((respostaCompleta) =>{
+      const PessoasFavoritasDato = respostaCompleta.data.allIdols;
+      SetPessoasFavoritas(PessoasFavoritasDato)
+    })
+
   }, [])
 
   return (
