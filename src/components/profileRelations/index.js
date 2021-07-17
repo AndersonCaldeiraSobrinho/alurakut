@@ -11,7 +11,7 @@ export function ProfileRelationsBoxContent({ props }) {
       {props.slice(0, 6).map((itemAtual) => {
         return (
           <li key={itemAtual.nodeId}>
-            <a href={itemAtual.url}>
+            <a href={itemAtual.url} >
             <img src={itemAtual.avatarUrl} />
             <span>{itemAtual.login}</span>
             </a>

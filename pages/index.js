@@ -21,14 +21,14 @@ function ProfileSideBar(propriedades) {
   )
 }
 
+
+
+
+
 export default function Home() {
-  
   const [seguidores, setSeguidores] = React.useState([]);
-  const img = 'https://picsum.photos/200/300';
   const githubUser = 'AndersonCaldeiraSobrinho';
-  const [comunidades, setComunidades] = React.useState([{
-   
-  }]);
+  const [comunidades, setComunidades] = React.useState([]);
   const [pessoasFavoritas, SetPessoasFavoritas] = React.useState([]);
 
   React.useEffect(function(){
@@ -43,16 +43,17 @@ export default function Home() {
     fetch('https://graphql.datocms.com/', {
       method: 'POST',
       headers: {
-        'Authorization': '4d69a29483d6bd56b11461f6045992',
+        'Authorization': 'ab2528a3e56349fd9833d3206b9938',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
       body: JSON.stringify({"query": `query {
         allCommunities {
           nodeId
+          url
           avatarUrl
           login
-          url
+          
         }
       }`})
     })
@@ -65,7 +66,7 @@ export default function Home() {
     fetch('https://graphql.datocms.com/', {
       method: 'POST',
       headers: {
-        'Authorization': '4d69a29483d6bd56b11461f6045992',
+        'Authorization': 'ab2528a3e56349fd9833d3206b9938',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
@@ -109,13 +110,28 @@ export default function Home() {
               
               const dadosDoForm = new FormData(e.target);
               const comunidade = {
-                id: new Date().toISOString(),
-                title: dadosDoForm.get('title'),
-                image: dadosDoForm.get('image'),
+                nodeId: new Date().toISOString(),
+                url: "#",
+                avatarUrl: dadosDoForm.get('image'),
+                login: dadosDoForm.get('title'),
+                
               }
+
+              fetch('api/comunidades', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(comunidade)
+              })
+              .then(async (response) => {
+                const dados = await response.json();
+                console.log(dados.registroCriadoComunidade);
+                const comunidade = dados.registroCriadoComunidade;
+                const comunidadesAtualizadas = [...comunidades, comunidade];
+                setComunidades(comunidadesAtualizadas);  
+              })
               
-              const comunidadesAtualizadas = [...comunidades, comunidade];
-              setComunidades(comunidadesAtualizadas);
               
             }}>
               <div>
@@ -129,8 +145,7 @@ export default function Home() {
                 <input 
                   placeholder="Coloque uma URL para usarmos de capa" 
                   name="image" 
-                  aria-label="Coloque uma URL para usarmos de capa" 
-                  value = {img}
+                  aria-label="Coloque uma URL para usarmos de capa"
                 />
               </div>
 

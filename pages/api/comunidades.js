@@ -1,4 +1,4 @@
-import {SiteClient} from datocms-client;
+import { SiteClient } from 'datocms-client';
 
 export default async function recebedorDeRequests(request, response) {
     
@@ -8,14 +8,13 @@ export default async function recebedorDeRequests(request, response) {
 
         const client = new SiteClient (TOKEN);
 
-        const registroCriado = client.items.create({
+        const registroCriadoComunidade = await client.items.create({
             itemType: "972371",
-
+            ...request.body,
         })
 
         response.json({
-            dados:"sdfsd",
-            registroCriado: registroCriado
+            registroCriadoComunidade: registroCriadoComunidade
         })
         return;
     }   
