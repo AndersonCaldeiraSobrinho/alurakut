@@ -1,18 +1,20 @@
 import React from 'react';
 
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/Box';
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AluraKutCommons';
 import { ProfileRelationsBoxWrapper, ProfileRelationsBoxContent } from '../src/components/profileRelations';
 
-function ProfileSideBar(propriedades) {
+function ProfileSideBar(props) {
   return (
     <Box as='aside'>
-      <img src= {`https://github.com/${propriedades.githubUser}.png`} style= {{ borderRadius: '8px' }} />
+      <img src= {`https://github.com/${props.githubUser}.png`} style= {{ borderRadius: '8px' }} />
       <hr />
       <p>
-        <a className="boxLink" href={`https://github.com/${propriedades.githubUser}`} >
-          @{propriedades.githubUser}
+        <a className="boxLink" href={`https://github.com/${props.githubUser}`} >
+          @{props.githubUser}
         </ a>
       </p>
       <hr />
@@ -25,9 +27,11 @@ function ProfileSideBar(propriedades) {
 
 
 
-export default function Home() {
+
+/** @param {import('next').InferGetServerSidePropsType<typeof getServerSideProps> } props */
+  export default function Home(props) {
   const [seguidores, setSeguidores] = React.useState([]);
-  const githubUser = 'AndersonCaldeiraSobrinho';
+  const githubUser = props.githubUser;
   const [comunidades, setComunidades] = React.useState([]);
   const [pessoasFavoritas, SetPessoasFavoritas] = React.useState([]);
 
@@ -180,3 +184,30 @@ export default function Home() {
     </>
   )
 }
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN;
+  const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth', {
+    headers: {
+        Authorization: token
+      }
+  })
+  .then((resposta) => resposta.json())
+
+  if(!isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
+
+  const { githubUser } = jwt.decode(token);
+  return {
+    props: {
+      githubUser
+    }, // will be passed to the page component as props
+  }
+} 
