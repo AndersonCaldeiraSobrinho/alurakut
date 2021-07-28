@@ -28,6 +28,8 @@ const Box = styled.div`
     font-weight: 700;
     color: #333333;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
   }
   hr {
     margin-top: 12px;

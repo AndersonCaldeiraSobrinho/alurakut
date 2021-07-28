@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import jwt from 'jsonwebtoken';
 import MainGrid from '../src/components/MainGrid';
@@ -40,7 +39,6 @@ function ProfileSideBar(props) {
     fetch('https://api.github.com/users/AndersonCaldeiraSobrinho/followers')
     .then(function (respostaDoServidor) {
       return respostaDoServidor.json();
-      
     })
     .then(function(respostaCompleta){
       setSeguidores(respostaCompleta);
@@ -188,7 +186,7 @@ function ProfileSideBar(props) {
               </div>
             </h2>
             <ProfileRelationsBoxContent props={comunidades} />
-            <a className="efeitoDestTxt" href = "/community">
+            <a className="efeitoDestTxt" href = "/following">
               <div>
                 Ver todos
               </div>
@@ -204,7 +202,7 @@ function ProfileSideBar(props) {
               </div>
             </h2>
             <ProfileRelationsBoxContentGithub props={seguidores} />
-            <a className="efeitoDestTxt" href = "/friends">
+            <a className="efeitoDestTxt" href = "/following">
               <div>
                 Ver todos
               </div>
@@ -213,7 +211,6 @@ function ProfileSideBar(props) {
           </Box>
         </div>
       </MainGrid>
-      
     </>
   )
 }

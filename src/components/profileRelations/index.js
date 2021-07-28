@@ -3,6 +3,26 @@ import styled from 'styled-components';
 import Box from '../Box';
 
 
+export function ProfileRelationsBoxContentGithub({ props }) {
+  return (
+    
+    
+      <ul>
+      {props.slice(0, 6).map((itemAtual) => {
+        return (
+          <li key={itemAtual.node_id}>
+            <a href={itemAtual.html_url} >
+            <img src={itemAtual.avatar_url} />
+            <span>{itemAtual.login}</span>
+            </a>
+          </li>
+        )
+      })}
+
+    </ul>
+
+  )
+}
 
 export function ProfileRelationsBoxContent({ props }) {
   return (
@@ -25,6 +45,21 @@ export function ProfileRelationsBoxContent({ props }) {
 }
 
 export const ProfileRelationsBoxWrapper = styled(Box)`
+
+  .efeitoDestCont {
+    color: var(--colorPrimary);
+    font-weight: bold;
+    margin-left: 5px;
+  }
+  .efeitoDestTxt {
+    color: var(--colorPrimary);
+    font-weight: bold;
+    font-family: "Verdana", sans-serif;
+    text-decoration: none;
+    div {
+      margin-top: 10px;
+    }
+  }
   ul {
     display: grid;
     grid-gap: 8px;

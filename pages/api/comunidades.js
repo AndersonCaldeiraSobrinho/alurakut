@@ -11,7 +11,9 @@ export default async function recebedorDeRequests(request, response) {
         const registroCriadoComunidade = await client.items.create({
             itemType: "972371",
             ...request.body,
+            
         })
+        console.log("teste")
 
         response.json({
             registroCriadoComunidade: registroCriadoComunidade
